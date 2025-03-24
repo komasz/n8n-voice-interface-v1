@@ -4,15 +4,32 @@ Replit entry point for N8N Voice Interface
 import os
 import sys
 
-# Add the current directory to the path so we can import from backend
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+# Add the current directory to the path so we can import modules
+current_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(current_dir)
 
-# Set default STT model to a known working version if not already set
+# Set default STT model if not already set
 if "STT_MODEL" not in os.environ:
     os.environ["STT_MODEL"] = "whisper-1"
 
-# Import and run the app
-from backend.app import app
+# Import FastAPI app
+try:
+    # Try importing directly (if backend is in the current directory)
+    from backend.app import app
+    print("Successfully imported app module from backend directory")
+except ModuleNotFoundError:
+    # If that fails, try with n8n-voice-interface-v1 path
+    try:
+        sys.path.append(os.path.join(current_dir, "n8n-voice-interface-v1"))
+        from n8n_voice_interface_v1.backend.app import app
+        print("Successfully imported app module from n8n-voice-interface-v1/backend directory")
+    except ModuleNotFoundError:
+        # Print all directories in the current path to help debug
+        print("Current directory:", current_dir)
+        print("Files in current directory:", os.listdir(current_dir))
+        print("Python path:", sys.path)
+        raise Exception("Could not import the app module. Please check your directory structure.")
+
 import uvicorn
 
 if __name__ == "__main__":
@@ -25,7 +42,7 @@ if __name__ == "__main__":
     
     # Run the application
     uvicorn.run(
-        "backend.app:app", 
+        app, 
         host="0.0.0.0", 
         port=port,
         reload=False
