@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>N8N Voice Interface</title>
+    <title>Interfejs Głosowy N8N</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>N8N Voice Interface</h1>
-            <p class="subtitle">Speak to trigger your n8n workflows</p>
+            <h1>Interfejs Głosowy N8N</h1>
+            <p class="subtitle">Mów, aby uruchomić swoje procesy n8n</p>
         </header>
 
         <main>
             <div class="voice-interface">
                 <div id="status-container">
-                    <div id="status-message">Ready to listen</div>
+                    <div id="status-message">Gotowy do nasłuchiwania</div>
                     <div id="visualization-container">
                         <div class="visualization-bar"></div>
                         <div class="visualization-bar"></div>
@@ -34,8 +34,13 @@
                 </div>
 
                 <div id="transcription-container" class="hidden">
-                    <h3>Transcription:</h3>
+                    <h3>Transkrypcja:</h3>
                     <div id="transcription-text"></div>
+                </div>
+
+                <div id="response-container" class="hidden">
+                    <h3>Odpowiedź:</h3>
+                    <div id="response-text"></div>
                 </div>
             </div>
 
@@ -44,32 +49,41 @@
             </div>
 
             <div class="settings-container">
-                <h3>Settings</h3>
+                <h3>Ustawienia</h3>
                 <div class="form-group">
-                    <label for="webhook-url">N8N Webhook URL:</label>
-                    <input type="text" id="webhook-url" placeholder="https://your-n8n-instance/webhook/path">
-                    <button id="save-settings" class="btn">Save</button>
+                    <label for="webhook-url">URL Webhooka N8N:</label>
+                    <input type="text" id="webhook-url" placeholder="https://twoja-instancja-n8n/webhook/sciezka">
+                    <button id="save-settings" class="btn">Zapisz</button>
+                </div>
+                <div class="form-group">
+                    <label for="continuous-listening">Ciągłe nasłuchiwanie:</label>
+                    <div class="toggle-container">
+                        <input type="checkbox" id="continuous-listening" checked>
+                        <label for="continuous-listening" class="toggle-label"></label>
+                        <span class="toggle-text">Włączone</span>
+                    </div>
                 </div>
             </div>
 
             <div class="info-container">
                 <div class="info-box">
-                    <h3>How to Use</h3>
+                    <h3>Jak używać</h3>
                     <ol>
-                        <li>Enter your n8n webhook URL in the settings</li>
-                        <li>Click the microphone button and start speaking</li>
-                        <li>Your speech will be transcribed and sent to n8n</li>
-                        <li>Check your n8n workflow for the incoming data</li>
+                        <li>Wprowadź URL webhooka n8n w ustawieniach</li>
+                        <li>Kliknij przycisk mikrofonu i zacznij mówić</li>
+                        <li>Twoja mowa zostanie transkrybowana i wysłana do n8n</li>
+                        <li>Odpowiedź z n8n zostanie automatycznie odczytana</li>
                     </ol>
                 </div>
             </div>
         </main>
 
         <footer>
-            <p>Powered by OpenAI's gpt-4o-transcribe | <a href="https://github.com/yourusername/n8n-voice-interface" target="_blank">View on GitHub</a></p>
+            <p>Zasilane przez OpenAI gpt-4o-transcribe i gpt-4o-mini-tts | <a href="https://github.com/yourusername/n8n-voice-interface" target="_blank">Zobacz na GitHub</a></p>
         </footer>
     </div>
 
     <script src="app.js"></script>
+    <script src="custom.js"></script>
 </body>
 </html>
